@@ -20,3 +20,35 @@ This project establishes a connection to a proxy server, sends a request, and fo
 - `toralize.h`: Header file containing the necessary definitions and includes.
 - `toralize.so`: Shared library that is dynamically loaded.
 - `Makefile`: Script to automate the build process.
+
+## Usage
+
+### Compilation
+
+To compile the project, simply run:
+
+```sh
+make
+```
+
+### Running the Proxy
+
+Before running the proxy, set up the environment variable to preload `toralize.so`:
+
+```sh
+#!/bin/bash
+
+export LD_PRELOAD=/home/himanshu/Desktop/c-projects/toralize/toralize.so
+"$@"
+unset LD_PRELOAD
+```
+
+### Using the Proxy with `curl`
+
+To use the proxy with `curl`, execute the following command:
+
+```sh
+toralize curl http://<website_name_or_ip_address>
+```
+
+Replace `<website_name_or_ip_address>` with the actual website or IP address you want to access through the proxy.
