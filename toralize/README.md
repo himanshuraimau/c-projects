@@ -38,7 +38,7 @@ Before running the proxy, set up the environment variable to preload `toralize.s
 ```sh
 #!/bin/bash
 
-export LD_PRELOAD=/home/himanshu/Desktop/c-projects/toralize/toralize.so
+export LD_PRELOAD=/home/..../toralize/toralize.so
 "$@"
 unset LD_PRELOAD
 ```
