@@ -8,7 +8,10 @@ This repository contains a collection of C projects aimed at improving proficien
 
 Connects to a proxy server, sends requests, and forwards data through the proxy using dynamic loading techniques.
 
+### Arcfour Project
 
-## Contributions
+This project implements the RC4 stream cipher. It includes functions to initialize the cipher, encrypt data, and decrypt data.
 
-Contributions are welcome! Fork the repository and create a pull request with any improvements or new projects.
+
+
+

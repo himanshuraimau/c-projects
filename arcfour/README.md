@@ -40,3 +40,6 @@ The program will initialize the RC4 cipher, encrypt a sample text, and then decr
 
 Replace `<key>` and `<plaintext>` in `main.c` to test with different inputs.
 
+### Learn More
+
+To read more about the RC4 cipher, visit the [Wikipedia page on RC4](https://en.wikipedia.org/wiki/RC4).
