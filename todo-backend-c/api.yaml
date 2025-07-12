@@ -1,0 +1,240 @@
+openapi: 3.0.0
+info:
+  title: Todo Backend API
+  description: A simple todo application backend written in C
+  version: 1.0.0
+  contact:
+    name: Todo Backend API
+    url: https://github.com/your-repo/todo-backend-c
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+
+servers:
+  - url: http://localhost:8080
+    description: Local development server
+
+paths:
+  /todos:
+    get:
+      summary: Get all todos
+      description: Retrieve a list of all todo items
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Todo'
+              example:
+                - id: "1"
+                  text: "Buy groceries"
+                  completed: false
+                  created_at: 1642678800
+                  updated_at: 1642678800
+    
+    post:
+      summary: Create a new todo
+      description: Create a new todo item
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTodoRequest'
+            example:
+              text: "Learn C programming"
+      responses:
+        '201':
+          description: Todo created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Todo'
+              example:
+                id: "1"
+                text: "Learn C programming"
+                completed: false
+                created_at: 1642678800
+                updated_at: 1642678800
+        '400':
+          description: Invalid request body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                error: "Invalid request body"
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                error: "Failed to create todo"
+
+  /todos/{id}:
+    get:
+      summary: Get a specific todo
+      description: Retrieve a specific todo item by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The todo ID
+          schema:
+            type: string
+          example: "1"
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Todo'
+              example:
+                id: "1"
+                text: "Buy groceries"
+                completed: false
+                created_at: 1642678800
+                updated_at: 1642678800
+        '404':
+          description: Todo not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                error: "Not found"
+    
+    put:
+      summary: Update a todo
+      description: Update an existing todo item
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The todo ID
+          schema:
+            type: string
+          example: "1"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateTodoRequest'
+            example:
+              text: "Buy groceries and cook dinner"
+              completed: true
+      responses:
+        '200':
+          description: Todo updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Todo'
+              example:
+                id: "1"
+                text: "Buy groceries and cook dinner"
+                completed: true
+                created_at: 1642678800
+                updated_at: 1642682400
+        '404':
+          description: Todo not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                error: "Not found"
+    
+    delete:
+      summary: Delete a todo
+      description: Delete a specific todo item
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The todo ID
+          schema:
+            type: string
+          example: "1"
+      responses:
+        '204':
+          description: Todo deleted successfully
+        '404':
+          description: Todo not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                error: "Not found"
+
+components:
+  schemas:
+    Todo:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the todo
+          example: "1"
+        text:
+          type: string
+          description: The todo text
+          example: "Buy groceries"
+        completed:
+          type: boolean
+          description: Whether the todo is completed
+          example: false
+        created_at:
+          type: integer
+          description: Unix timestamp when the todo was created
+          example: 1642678800
+        updated_at:
+          type: integer
+          description: Unix timestamp when the todo was last updated
+          example: 1642678800
+      required:
+        - id
+        - text
+        - completed
+        - created_at
+        - updated_at
+    
+    CreateTodoRequest:
+      type: object
+      properties:
+        text:
+          type: string
+          description: The todo text
+          example: "Learn C programming"
+      required:
+        - text
+    
+    UpdateTodoRequest:
+      type: object
+      properties:
+        text:
+          type: string
+          description: The todo text
+          example: "Learn C programming"
+        completed:
+          type: boolean
+          description: Whether the todo is completed
+          example: true
+    
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error message
+          example: "Not found"
+      required:
+        - error
